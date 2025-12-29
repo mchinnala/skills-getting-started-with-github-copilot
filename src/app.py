@@ -106,4 +106,12 @@ def signup_for_activity(activity_name: str, email: str):
     # Add student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
-   
+
+@app.get("/activities/{activity_name}/participants")
+def get_participants(activity_name: str):
+    """Get participants for a specific activity"""
+    # Validate activity exists
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    
+    return {"participants": activities[activity_name]["participants"]}

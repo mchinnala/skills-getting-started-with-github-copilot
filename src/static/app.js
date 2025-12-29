@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Participants:</strong></p>
+          <ul id="participants-${name}">
+            <!-- Participants will be loaded here -->
+          </ul>
         `;
 
         activitiesList.appendChild(activityCard);
@@ -34,10 +38,33 @@ document.addEventListener("DOMContentLoaded", () => {
         option.value = name;
         option.textContent = name;
         activitySelect.appendChild(option);
+
+        // Load participants for each activity
+        loadParticipants(name);
       });
     } catch (error) {
       activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
       console.error("Error fetching activities:", error);
+    }
+  }
+
+  // Load participants for a given activity
+  async function loadParticipants(activityName) {
+    try {
+      const response = await fetch(`/activities/${activityName}/participants`);
+      const data = await response.json();
+      const participantsList = document.getElementById(`participants-${activityName}`);
+
+      // Clear existing participants
+      participantsList.innerHTML = "";
+
+      data.participants.forEach(participant => {
+        const listItem = document.createElement('li');
+        listItem.textContent = participant;
+        participantsList.appendChild(listItem);
+      });
+    } catch (error) {
+      console.error(`Error fetching participants for ${activityName}:`, error);
     }
   }
 

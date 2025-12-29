@@ -46,5 +46,41 @@
     </footer>
 
     <script src="app.js"></script>
+
+    <script>
+      // Sample JavaScript to demonstrate loading activities and participants
+      document.addEventListener("DOMContentLoaded", function () {
+        const activities = [
+          {
+            name: "Basketball",
+            description: "Join the basketball team and improve your skills.",
+            schedule: "Mon, Wed, Fri - 4 PM to 6 PM",
+          },
+          {
+            name: "Drama Club",
+            description: "Participate in drama and improve your acting skills.",
+            schedule: "Tue, Thu - 3 PM to 5 PM",
+          },
+        ];
+
+        const activitiesList = document.getElementById("activities-list");
+        activitiesList.innerHTML = ""; // Clear loading text
+
+        activities.forEach((activity) => {
+          const activityCard = document.createElement("div");
+          activityCard.classList.add("activity-card");
+          activityCard.innerHTML = `
+            <h4>${activity.name}</h4>
+            <p>${activity.description}</p>
+            <p><strong>Schedule:</strong> ${activity.schedule}</p>
+            <p><strong>Participants:</strong></p>
+            <ul id="participants-${activity.name}">
+              <!-- Participants will be loaded here -->
+            </ul>
+          `;
+          activitiesList.appendChild(activityCard);
+        });
+      });
+    </script>
   </body>
 </html>

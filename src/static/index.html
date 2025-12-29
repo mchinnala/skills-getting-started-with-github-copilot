@@ -69,13 +69,17 @@
         activities.forEach((activity) => {
           const activityCard = document.createElement("div");
           activityCard.classList.add("activity-card");
+
+          // demo participants for the static example
+          const sampleParticipants = ["alice@mergington.edu", "bob@mergington.edu"];
+
           activityCard.innerHTML = `
             <h4>${activity.name}</h4>
             <p>${activity.description}</p>
             <p><strong>Schedule:</strong> ${activity.schedule}</p>
             <p><strong>Participants:</strong></p>
-            <ul id="participants-${activity.name}">
-              <!-- Participants will be loaded here -->
+            <ul id="participants-${activity.name}" class="participant-list">
+              ${sampleParticipants.map(p => `<li><span class="participant-email">${p}</span> <button class="delete-btn" data-activity="${activity.name}" data-email="${p}" aria-label="Unregister ${p}">✖</button></li>`).join('')}
             </ul>
           `;
           activitiesList.appendChild(activityCard);
